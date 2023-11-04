@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TagResource\Pages;
 use App\Filament\Resources\TagResource\RelationManagers;
-use App\Models\Tag;
+use App\Models\Blog\Tag;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;

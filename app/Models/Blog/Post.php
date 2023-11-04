@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Blog;
 
+
+use App\Models\Blog\BlogUser as User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,9 +13,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
+
 class Post extends Model
 {
     use HasFactory;
+    protected $connection = 'blog_db';
 
     protected $fillable = [
         'user_id',

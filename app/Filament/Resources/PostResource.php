@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Forms\Components\FileUploadMy;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
-use App\Models\Post;
+use App\Models\Blog\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;

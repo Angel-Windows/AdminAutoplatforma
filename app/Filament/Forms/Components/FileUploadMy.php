@@ -2,7 +2,7 @@
 
 namespace App\Filament\Forms\Components;
 
-use App\Models\Post;
+use App\Models\Blog\Post;
 use Closure;
 use Exception;
 use Filament\Forms\Components\BaseFileUpload;

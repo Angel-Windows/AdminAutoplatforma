@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Blog\Post;
 
 class HomePageController extends Controller
 {
