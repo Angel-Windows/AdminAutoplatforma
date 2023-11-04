@@ -21,7 +21,7 @@
     }
 </style>
 <div class="cardList">
-    <img src="http://5.75.180.9//storage/posts/e4jvDAFpGZnce9iFm9qcXNuS2It9gR7euaLwX3Rv.png" alt="">
+    <img src="" alt="">
     @foreach($data as $item)
         <div class="card">
             {!! $item->content !!}

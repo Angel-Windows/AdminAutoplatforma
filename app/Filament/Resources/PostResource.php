@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Forms\Components\FileUploadMy;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
@@ -14,7 +15,10 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+
 
 class PostResource extends Resource
 {
@@ -40,7 +44,7 @@ class PostResource extends Resource
                                     ->autofocus()
                                     ->required()
                                     ->debounce()
-                                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
                                 Forms\Components\TextInput::make('slug')
                                     ->readOnly()
                                     ->required(),
@@ -61,7 +65,7 @@ class PostResource extends Resource
                                 Forms\Components\Select::make('user_id')
                                     ->label('Author')
                                     ->relationship('user', 'name')
-                                    ->default(fn () => auth()->id())
+                                    ->default(fn() => auth()->id())
                                     ->required(),
                                 Forms\Components\Select::make('category_id')
                                     ->searchable()
@@ -69,7 +73,7 @@ class PostResource extends Resource
                                     ->createOptionForm([
                                         Forms\Components\TextInput::make('name')
                                             ->debounce()
-                                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                                            ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
                                             ->required(),
                                         Forms\Components\TextInput::make('slug')
                                             ->readOnly()
@@ -81,35 +85,28 @@ class PostResource extends Resource
                                     ->relationship('tags', 'name'),
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->label('Published At'),
-                                Forms\Components\FileUpload::make('cover')
+                                Forms\Components\FileUpload::make('covers')
                                     ->label('Cover Image')
                                     ->image()
                                     ->directory('posts'),
-                            ]),
-                    ]),
-                Forms\Components\Section::make('Photos')
-                    ->columnSpan(['lg' => 3])
-                    ->collapsible()
-                    ->schema([
-                        Forms\Components\Repeater::make('photos')
-                            ->label('')
-                            ->columns()
-                            ->relationship()
-                            ->deleteAction(function (Forms\Components\Actions\Action $action) {
-                                $action->requiresConfirmation();
-                            })
-                            ->defaultItems(0)
-                            ->schema([
-                                Forms\Components\TextInput::make('alt_text')
-                                    ->label('Alternative Text')
-                                    ->required(),
-                                Forms\Components\FileUpload::make('path')
-                                    ->label('Photo')
+                                FileUploadMy::make('cover')
+                                    ->label('Cover Image')
+                                    ->directory('posts')
                                     ->image()
-                                    ->openable()
-                                    ->directory('photos')
-                                    ->required(),
-                            ])
+                                    ->afterStateUpdated(function ($state) {
+//                                        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
+//                                        $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
+//                                        $model->cover = $host . '/' . $model->cover;
+//                                        $model->save();
+                                    })
+//                                    ->saveUploadedFileUsing(function ($component, $file) {
+//
+//                                        $storedPath = Storage::putFile('posts', $file);
+//                                        $component->store();
+//                                        return $storedPath;
+//                                    })
+                                ,
+                            ]),
                     ]),
             ]);
     }
