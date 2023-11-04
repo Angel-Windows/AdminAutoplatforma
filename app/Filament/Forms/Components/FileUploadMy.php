@@ -53,7 +53,7 @@ class FileUploadMy extends FileUpload
        if ($model){
            $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
            $cover = $model->cover;
-           $model->url = "https://" . $host . '/' . $cover;
+           $model->url = "https://" . $host . '//storage/' . $cover;
            $model->save();
        }
 //        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
