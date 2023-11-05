@@ -89,6 +89,7 @@ class Post extends Model
             $filePath = $model->cover;
             $files = [];
             $targetUrl = env('blog_url') . 'save_file';
+            dd($targetUrl);
 //            $targetUrl = env('blog_url') . '/save_file';
             if (Storage::disk('public')->exists($filePath)) {
                 $imagePath = Storage::disk('public')->get($filePath);
