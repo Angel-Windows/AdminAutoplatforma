@@ -121,7 +121,7 @@ class Post extends Model
                     ];
                 }
             }
-            dd(env('blog_url'));
+            dd($_ENV['DB_HOST'] . env('DB_HOST') . env('DB_HOST', 'default_value'));
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
