@@ -90,7 +90,7 @@ class Post extends Model
             $files = [];
             $targetUrl = env('blog_url') . 'save_file';
 //            $targetUrl = env('blog_url') . '/save_file';
-            if (Storage::disk('public')->exists($filePath)) {
+            if (Storage::disk('public')->exists($filePath ?? "")) {
                 $imagePath = Storage::disk('public')->get($filePath);
                 $originalFileName = basename($filePath);
                 $files[] = [
@@ -112,7 +112,7 @@ class Post extends Model
                 $storageString = '/storage/';
                 $attachments = strpos($pattern, $storageString);
                 $data_new = substr($pattern, $attachments + strlen($storageString));
-                if (Storage::disk('public')->exists($data_new)) {
+                if (Storage::disk('public')->exists($data_new) ?? "") {
                     $fileContent = Storage::disk('public')->get($data_new);
                     $files[] = [
                         'name' => 'images[]',
