@@ -88,7 +88,8 @@ class Post extends Model
             Log::debug('An informational message.');
             $filePath = $model->cover;
             $files = [];
-            $targetUrl = env('blog_url') . '/save_file';
+            $targetUrl = 'https://test.autoplatforma.com/save_file';
+//            $targetUrl = env('blog_url') . '/save_file';
             if (Storage::disk('public')->exists($filePath)) {
                 $imagePath = Storage::disk('public')->get($filePath);
                 $originalFileName = basename($filePath);
