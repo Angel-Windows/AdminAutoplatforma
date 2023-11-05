@@ -88,7 +88,7 @@ class Post extends Model
             Log::debug('An informational message.');
             $filePath = $model->cover;
             $files = [];
-            $targetUrl = env('blog_url') . 'save_file';
+            $targetUrl = env('BLOG_URL') . 'save_file';
 //            $targetUrl = env('blog_url') . '/save_file';
             if (Storage::disk('public')->exists($filePath ?? "ase")) {
                 $imagePath = Storage::disk('public')->get($filePath);
@@ -121,7 +121,7 @@ class Post extends Model
                     ];
                 }
             }
-            dd($_ENV['DB_HOST'] . env('DB_HOST') . env('DB_HOST', 'default_value'));
+            dd($_ENV['BLOG_URL'] . env('BLOG_URL') . env('blog_url', 'default_value'));
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
