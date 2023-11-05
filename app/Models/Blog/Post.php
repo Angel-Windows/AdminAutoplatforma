@@ -106,7 +106,7 @@ class Post extends Model
             $newBaseUrl = env('BLOG_URL');
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
-
+            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
             $srcValues = $matches[1];
             foreach ($srcValues as $pattern) {
                 $storageString = '/storage/';
@@ -123,9 +123,9 @@ class Post extends Model
             }
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
-                ->update(['content' => $newHtml]);
+                ->update(['content_blog' => $newHtml]);
             $response = Http::attach($files)->post($targetUrl);
-        });
+        };);
     }
 
 }
