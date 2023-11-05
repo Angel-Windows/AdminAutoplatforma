@@ -121,6 +121,7 @@ class Post extends Model
                     ];
                 }
             }
+            dd($targetUrl);
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
