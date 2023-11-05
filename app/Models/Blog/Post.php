@@ -125,7 +125,7 @@ class Post extends Model
                 ->where('id', $model->id)
                 ->update(['content_blog' => $newHtml]);
             $response = Http::attach($files)->post($targetUrl);
-        };);
+        });
     }
 
 }
