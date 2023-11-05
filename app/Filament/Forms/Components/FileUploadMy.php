@@ -2,6 +2,7 @@
 
 namespace App\Filament\Forms\Components;
 
+use Illuminate\Support\Facades\Http;
 use App\Models\Blog\Post;
 use Closure;
 use Exception;
@@ -24,13 +25,7 @@ class FileUploadMy extends FileUpload
 
     public function uploadDirectory(string $directory): self
     {
-        $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
-        $new_directory = $directory . "/";
-        $this->configure(function () use ($directory) {
-            $this->directory = $directory;
-        });
 
-        return $this;
     }
 
     public function setSaveUploadedFileUsing($argument)
@@ -46,20 +41,25 @@ class FileUploadMy extends FileUpload
         return $this;
     }
 
-    public function afterStateUpdated(?Closure $callback): static
+//    public function afterStateUpdated(?Closure $callback): static
+//    {
+//        $postId = request('record');
+//        $model = Post::find($postId);
+//        if ($model) {
+//            $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
+//            $cover = $model->cover;
+//            $model->cover_url = "https://" . $host . '//storage/' . $cover;
+//            $model->save();
+//        }
+////        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
+//
+////        $this->sendMoreHost();
+//        return $this;
+//    }
+
+    public function sendMoreHost()
     {
-        $postId = request('record');
-        $model = Post::find($postId);
-       if ($model){
-           $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
-           $cover = $model->cover;
-           $model->url = "https://" . $host . '//storage/' . $cover;
-           $model->save();
-       }
-//        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
 
-
-        return $this;
     }
 
     public function store()

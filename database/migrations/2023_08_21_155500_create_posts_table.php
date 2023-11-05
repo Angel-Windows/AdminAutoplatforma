@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug', 255)->unique();
             $table->text('excerpt')->nullable();
             $table->text('content')->nullable();
+            $table->text('content_blog')->nullable();
             $table->string('cover', 255)->nullable();
             $table->timestamp('published_at')->nullable();
 

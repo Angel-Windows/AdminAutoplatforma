@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -85,27 +86,13 @@ class PostResource extends Resource
                                     ->relationship('tags', 'name'),
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->label('Published At'),
-                                Forms\Components\FileUpload::make('covers')
-                                    ->label('Cover Image')
-                                    ->image()
-                                    ->directory('posts'),
-                                FileUploadMy::make('cover')
+                                Forms\Components\TextInput::make('reading_time')
+                                    ->numeric()
+                                    ->label('Reading Time'),
+                                Forms\Components\FileUpload::make('cover')
                                     ->label('Cover Image')
                                     ->directory('posts')
                                     ->image()
-                                    ->afterStateUpdated(function ($state) {
-//                                        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
-//                                        $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
-//                                        $model->cover = $host . '/' . $model->cover;
-//                                        $model->save();
-                                    })
-//                                    ->saveUploadedFileUsing(function ($component, $file) {
-//
-//                                        $storedPath = Storage::putFile('posts', $file);
-//                                        $component->store();
-//                                        return $storedPath;
-//                                    })
-                                ,
                             ]),
                     ]),
             ]);
