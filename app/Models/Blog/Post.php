@@ -102,7 +102,7 @@ class Post extends Model
             $pattern = '/href="([^"]+)"/';
 
             preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = url('/') . 'storage/';
+            $oldBaseUrl = env('APP_URL') . 'storage/';
             $newBaseUrl = env('BLOG_URL');
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
