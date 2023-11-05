@@ -102,11 +102,11 @@ class Post extends Model
             $pattern = '/href="([^"]+)"/';
 
             preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = str_replace("https://", "http://", env('APP_URL'))  . 'storage/';
+            $oldBaseUrl = str_replace("https://", "http://", env('APP_URL'))  . '/storage/';
             $newBaseUrl = env('BLOG_URL') ;
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
-            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
+//            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
             $srcValues = $matches[1];
             foreach ($srcValues as $pattern) {
                 $storageString = '/storage/';
