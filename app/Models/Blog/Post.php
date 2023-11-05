@@ -88,7 +88,7 @@ class Post extends Model
             Log::debug('An informational message.');
             $filePath = $model->cover;
             $files = [];
-            $targetUrl = 'https://test.autoplatforma.com/save_file';
+            $targetUrl = env('blog_url') . 'save_file';
 //            $targetUrl = env('blog_url') . '/save_file';
             if (Storage::disk('public')->exists($filePath)) {
                 $imagePath = Storage::disk('public')->get($filePath);
@@ -102,7 +102,7 @@ class Post extends Model
             $pattern = '/href="([^"]+)"/';
 
             preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = url('/') . '/storage/';
+            $oldBaseUrl = url('/') . 'storage/';
             $newBaseUrl = env('blog_url');
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
