@@ -102,8 +102,8 @@ class Post extends Model
             $pattern = '/href="([^"]+)"/';
 
             preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = env('APP_URL') . 'storage/';
-            $newBaseUrl = env('BLOG_URL');
+            $oldBaseUrl = str_replace("https://", "http://", env('APP_URL')) . '/' . 'storage/';
+            $newBaseUrl = env('BLOG_URL') ;
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
             dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
