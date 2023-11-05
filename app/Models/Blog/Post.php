@@ -103,7 +103,7 @@ class Post extends Model
 
             preg_match_all($pattern, $model->content, $matches);
             $oldBaseUrl = url('/') . 'storage/';
-            $newBaseUrl = env('blog_url');
+            $newBaseUrl = env('BLOG_URL');
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
 
@@ -121,7 +121,6 @@ class Post extends Model
                     ];
                 }
             }
-            dd($_ENV['BLOG_URL'] . env('BLOG_URL') . env('blog_url', 'default_value'));
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
