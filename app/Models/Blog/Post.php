@@ -121,6 +121,7 @@ class Post extends Model
                     ];
                 }
             }
+
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content_blog' => $newHtml]);
@@ -128,6 +129,7 @@ class Post extends Model
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
             $response = Http::attach($files)->post($targetUrl);
+            dd($response);
         });
     }
 
