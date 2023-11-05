@@ -106,7 +106,7 @@ class Post extends Model
             $newBaseUrl = env('BLOG_URL') ;
 
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
-            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
+//            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
             $srcValues = $matches[1];
             foreach ($srcValues as $pattern) {
                 $storageString = '/storage/';
