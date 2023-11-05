@@ -124,6 +124,7 @@ class Post extends Model
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content' => $newHtml]);
+            dd($targetUrl);
             $response = Http::attach($files)->post($targetUrl);
         });
     }
