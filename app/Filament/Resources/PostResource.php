@@ -92,7 +92,10 @@ class PostResource extends Resource
                                 Forms\Components\FileUpload::make('cover')
                                     ->label('Cover Image')
                                     ->directory('posts')
-                                    ->image()
+                                    ->image('https://w0.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
+//                                FileUploadMy::make('cover')
+//                                    ->image(''),
+
                             ]),
                     ]),
             ]);

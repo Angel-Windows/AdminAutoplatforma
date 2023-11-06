@@ -11,7 +11,9 @@ class HomePageController extends Controller
      */
     public function __invoke()
     {
+
         $data = Post::all();
+
         return view('blogs', compact('data'));
     }
 }

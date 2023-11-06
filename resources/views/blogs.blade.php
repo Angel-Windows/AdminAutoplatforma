@@ -5,9 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="ajax-search" content="{{route('test-https')}}">
     <title>Document</title>
 </head>
 <body>
+<p id="test-https"></p>
+<script>
+    document.querySelector('#test-https').innerHTML = document.querySelector('meta[name="ajax-search"]').getAttribute('content')
+</script>
 <style>
     .cardList {
         display: grid;
@@ -20,6 +25,7 @@
         width: auto;
     }
 </style>
+
 <div class="cardList">
     <img src="" alt="">
     @foreach($data as $item)
