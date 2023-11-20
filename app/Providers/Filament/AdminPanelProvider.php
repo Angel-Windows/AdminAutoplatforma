@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers\Filament;
+
 use Filament\SpatieLaravelTranslatablePlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -55,7 +56,14 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugin(SpatieLaravelTranslatablePlugin::make()
-                ->defaultLocales(['en', 'es']))
-            ;
+                ->defaultLocales([
+                        'en',
+                        'us',
+                        'de',
+                        'it',
+                        'kt',
+                        'ru',
+                    ]
+                ));
     }
 }

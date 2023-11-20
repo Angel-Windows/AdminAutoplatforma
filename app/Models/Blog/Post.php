@@ -82,7 +82,7 @@ class Post extends Model
     {
         parent::boot();
 
-        static::deleted(fn(Post $post) => Storage::disk('public')->delete($post->cover));
+//        static::deleted(fn(Post $post) => Storage::disk('public')->delete($post->cover));
     }
 
     protected static function booted()

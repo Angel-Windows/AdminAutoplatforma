@@ -50,10 +50,11 @@ class PostResource extends Resource
                                 Forms\Components\TextInput::make('title')
                                     ->autofocus()
                                     ->required()
-                                    ->debounce()
-                                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
+                                    ->debounce(),
+
+//                                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
                                 Forms\Components\TextInput::make('slug')
-                                    ->readOnly()
+//                                    ->readOnly()
                                     ->required(),
                                 Forms\Components\Textarea::make('excerpt')
                                     ->columnSpan(2),
