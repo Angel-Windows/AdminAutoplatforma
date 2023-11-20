@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Filament\Resources;
-
+use Filament\Resources\Concerns\Translatable;
+use Filament\SpatieLaravelTranslatablePlugin;
 use App\Filament\Forms\Components\FileUploadMy;
 use App\Filament\Resources\PostResource\Pages;
 use App\Filament\Resources\PostResource\RelationManagers;
@@ -19,21 +20,26 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-
+use App\Filament\Resources\Actions\ChangeLanguageAction;
 
 class PostResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Post::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Posts';
 
+
     public static function form(Form $form): Form
     {
+
         return $form
             ->columns(3)
             ->schema([
+
                 Forms\Components\Group::make()
                     ->columnSpan(['lg' => 2])
                     ->schema([
@@ -51,6 +57,8 @@ class PostResource extends Resource
                                     ->required(),
                                 Forms\Components\Textarea::make('excerpt')
                                     ->columnSpan(2),
+//                                ChangeLanguageAction::make('content'),
+
                                 Forms\Components\RichEditor::make('content')
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('posts')
@@ -118,6 +126,8 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime('Y-m-d H:i:s')
                     ->alignCenter(),
+                Tables\Columns\TextColumn::make('content'),
+
             ])
             ->filters([
                 //
@@ -142,5 +152,12 @@ class PostResource extends Resource
             'create' => Pages\CreatePost::route('/create'),
             'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
+    }
+
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->plugin(SpatieLaravelTranslatablePlugin::make()
+                ->defaultLocales(['en', 'es']));
     }
 }

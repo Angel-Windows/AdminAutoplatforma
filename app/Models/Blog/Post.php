@@ -15,13 +15,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
     use HasFactory;
-
+    use HasTranslations;
     protected $connection = 'blog_db';
-
+    public $translatable = [ 'content','title', 'excerpt'];
     protected $fillable = [
         'user_id',
         'category_id',
@@ -34,9 +35,11 @@ class Post extends Model
         'published_at',
         'reading_time',
     ];
-
     protected $casts = [
         'published_at' => 'datetime',
+        'content' => 'array',
+        'title' => 'array',
+        'excerpt' => 'array',
     ];
 
     public function user(): BelongsTo
@@ -125,9 +128,9 @@ class Post extends Model
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content_blog' => $newHtml]);
-            DB::connection('blog_db')->table('posts')
-                ->where('id', $model->id)
-                ->update(['content' => $newHtml]);
+//            DB::connection('blog_db')->table('posts')
+//                ->where('id', $model->id)
+//                ->update(['content' => $newHtml]);
             $response = Http::attach($files)->post($targetUrl);
         });
     }

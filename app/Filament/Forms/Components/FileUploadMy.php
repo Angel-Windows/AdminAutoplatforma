@@ -31,8 +31,6 @@ class FileUploadMy extends FileUpload
     public function setSaveUploadedFileUsing($argument)
     {
         return $this->saveUploadedFileUsing(static function (BaseFileUpload $component, TemporaryUploadedFile $file) use ($argument) {
-            // Ваша логика сохранения файла с аргументом, переданным в цепочке вызовов
-            // Например, изменение пути в базе данных
             $result = $argument;
             return $result;
         });
@@ -64,7 +62,7 @@ class FileUploadMy extends FileUpload
 
     public function store()
     {
-        $model = Post::where('id', 2)->first(); // Замените на логику поиска вашей модели
+        $model = Post::where('id', 2)->first();
 //        $model->cover = "222";
         $host = $_SERVER['HTTPS_HOST'] ?? $_SERVER['HTTP_HOST'] ?? "";
 

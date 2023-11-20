@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+
+
+//    protected $fillable = ['title', 'slug', 'excerpt', 'content', 'content_blog', 'cover', 'published_at'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +26,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'title', 'slug', 'excerpt', 'content', 'content_blog', 'cover', 'published_at'
     ];
 
     /**
