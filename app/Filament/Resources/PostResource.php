@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Filament\Resources\Actions\ChangeLanguageAction;
+use AmidEsfahani\FilamentTinyEditor\TinyEditor;
 
 class PostResource extends Resource
 {
@@ -60,11 +61,19 @@ class PostResource extends Resource
                                     ->columnSpan(2),
 //                                ChangeLanguageAction::make('content'),
 
-                                Forms\Components\RichEditor::make('content')
+//                                Forms\Components\RichEditor::make('content')
+//                                    ->fileAttachmentsDisk('public')
+//                                    ->fileAttachmentsDirectory('posts')
+//                                    ->columnSpan(2)
+//                                ,
+                                TinyEditor::make('content')
                                     ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsVisibility('public')
                                     ->fileAttachmentsDirectory('posts')
-                                    ->columnSpan(2)
-                                ,
+                                    ->profile('default|simple|full|minimal|none|custom')
+//                                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
+                                    ->columnSpan('full')
+                                    ->required()
                             ]),
                     ]),
                 Forms\Components\Group::make()
