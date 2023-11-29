@@ -118,16 +118,16 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('slug'),
+//                Tables\Columns\TextColumn::make('slug'),
                 Tables\Columns\TextColumn::make('category.name'),
-                Tables\Columns\TextColumn::make('tags.name')
-                    ->badge()
-                    ->color(Color::Teal)
-                    ->alignCenter(),
+//                Tables\Columns\TextColumn::make('tags.name')
+//                    ->badge()
+//                    ->color(Color::Teal)
+//                    ->alignCenter(),
                 Tables\Columns\TextColumn::make('published_at')
                     ->dateTime('Y-m-d H:i:s')
                     ->alignCenter(),
-                Tables\Columns\TextColumn::make('content'),
+//                Tables\Columns\TextColumn::make('content'),
 
             ])
             ->filters([
