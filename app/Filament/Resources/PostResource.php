@@ -99,9 +99,9 @@ class PostResource extends Resource
                                             ->unique()
                                             ->required(),
                                     ]),
-                                Forms\Components\Select::make('tags')
-                                    ->multiple()
-                                    ->relationship('tags', 'name'),
+//                                Forms\Components\Select::make('tags')
+//                                    ->multiple()
+//                                    ->relationship('tags', 'name'),
                                 Forms\Components\DateTimePicker::make('published_at')
                                     ->label('Published At'),
                                 Forms\Components\TextInput::make('reading_time')
@@ -113,7 +113,8 @@ class PostResource extends Resource
                                     ->image('https://w0.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
 //                                FileUploadMy::make('cover')
 //                                    ->image(''),
-
+                                Forms\Components\TextInput::make('alt')
+                                    ->required(),
                             ]),
                     ]),
             ]);
