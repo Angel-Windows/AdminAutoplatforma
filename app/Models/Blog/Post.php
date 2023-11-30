@@ -99,7 +99,7 @@ class Post extends Model
             if (Storage::disk('public')->exists($filePath ?? "ase")) {
                 $imagePath = Storage::disk('public')->get($filePath);
                 $originalFileName = basename($filePath);
-                Storage::disk('upload_logo_post')->put('posts/' . $originalFileName, $imagePath);
+                Storage::disk('posts_logo')->put('posts/' . $originalFileName, $imagePath);
 //                $files[] = [
 //                    'name' => 'images[]',
 //                    'contents' => $imagePath,
