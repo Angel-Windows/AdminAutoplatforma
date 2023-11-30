@@ -34,6 +34,7 @@ class Post extends Model
         'cover_url',
         'published_at',
         'reading_time',
+        'alt_image'
     ];
     protected $casts = [
         'published_at' => 'datetime',

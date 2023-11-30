@@ -113,8 +113,8 @@ class PostResource extends Resource
                                     ->image('https://w0.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
 //                                FileUploadMy::make('cover')
 //                                    ->image(''),
-                                Forms\Components\TextInput::make('alt')
-                                    ->required(),
+                                Forms\Components\TextInput::make('alt_image')
+                                    ->label('Alt'),
                             ]),
                     ]),
             ]);
