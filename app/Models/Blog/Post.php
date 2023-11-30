@@ -99,12 +99,12 @@ class Post extends Model
             if (Storage::disk('public')->exists($filePath ?? "ase")) {
                 $imagePath = Storage::disk('public')->get($filePath);
                 $originalFileName = basename($filePath);
-
-                $files[] = [
-                    'name' => 'images[]',
-                    'contents' => $imagePath,
-                    'filename' => $originalFileName,
-                ];
+                Storage::disk('upload_logo_post')->put('posts/' . $originalFileName, $imagePath);
+//                $files[] = [
+//                    'name' => 'images[]',
+//                    'contents' => $imagePath,
+//                    'filename' => $originalFileName,
+//                ];
             }
             $pattern = '/src="([^"]+)"/';
 
