@@ -16,6 +16,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "league/flysystem-aws-s3-v3": "^3.21",
+        "league/flysystem-ftp": "^3.21",
         "spatie/laravel-translatable": "^6.5",
         "vlucas/phpdotenv": "^5.5"
     },

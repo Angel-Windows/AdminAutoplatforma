@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+
 use Filament\Resources\Concerns\Translatable;
 use Filament\SpatieLaravelTranslatablePlugin;
 use App\Filament\Forms\Components\FileUploadMy;
@@ -66,12 +67,20 @@ class PostResource extends Resource
 //                                    ->fileAttachmentsDirectory('posts')
 //                                    ->columnSpan(2)
 //                                ,
+//                                TinyEditor::make('content')
+//                                    ->fileAttachmentsDisk('public')
+//                                    ->fileAttachmentsVisibility('public')
+//                                    ->fileAttachmentsDirectory('posts')
+//                                    ->profile('default|simple|full|minimal|none|custom')
+////                                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
+//                                    ->columnSpan('full')
+//                                    ->required(),
+
                                 TinyEditor::make('content')
                                     ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsVisibility('public')
+                                    ->fileAttachmentsVisibility('private')
                                     ->fileAttachmentsDirectory('posts')
                                     ->profile('default|simple|full|minimal|none|custom')
-//                                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
                                     ->columnSpan('full')
                                     ->required()
                             ]),
@@ -110,7 +119,8 @@ class PostResource extends Resource
                                 Forms\Components\FileUpload::make('cover')
                                     ->label('Cover Image')
                                     ->directory('posts')
-                                    ->image('https://w0.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
+                                    ->disk('public')
+                                    ->image('https://posts.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
 //                                FileUploadMy::make('cover')
 //                                    ->image(''),
                                 Forms\Components\TextInput::make('alt_image')

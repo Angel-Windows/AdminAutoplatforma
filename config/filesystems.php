@@ -54,6 +54,20 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+        'remote_server2' => [
+            'driver' => 'remote_server',
+            'url' => 'http://127.0.0.1:8001/ajax/save_file',
+            'key' => '23232323',
+
+        ],
+        'posts' => [
+            'driver'   => 'ftp',
+            'host'     => '5.75.180.9',
+            'username' => 'upluad',
+            'password' => 'qV9tL4pZ7c',
+
+            // Дополнительные параметры, если требуются
+        ],
 
     ],
 

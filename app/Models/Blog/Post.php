@@ -88,35 +88,44 @@ class Post extends Model
 
     protected static function booted()
     {
+
         static::saved(function ($model) {
             Log::debug('An informational message.');
             $filePath = $model->cover;
             $files = [];
             $targetUrl = env('BLOG_URL') . 'save_file';
+
 //            $targetUrl = env('blog_url') . '/save_file';
             if (Storage::disk('public')->exists($filePath ?? "ase")) {
                 $imagePath = Storage::disk('public')->get($filePath);
                 $originalFileName = basename($filePath);
+
                 $files[] = [
                     'name' => 'images[]',
                     'contents' => $imagePath,
                     'filename' => $originalFileName,
                 ];
             }
-            $pattern = '/href="([^"]+)"/';
+            $pattern = '/src="([^"]+)"/';
 
             preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = str_replace("https://", "http://", env('APP_URL'))  . '/storage/';
+            $oldBaseUrl = '../../../storage/';
             $newBaseUrl = env('BLOG_URL') ;
-
             $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
+
+
 //            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
             $srcValues = $matches[1];
+//            dd($srcValues);
             foreach ($srcValues as $pattern) {
-                $storageString = '/storage/';
+
+                $storageString = '../../../storage/';
                 $attachments = strpos($pattern, $storageString);
+
                 $data_new = substr($pattern, $attachments + strlen($storageString));
+
                 if (Storage::disk('public')->exists($data_new) ?? "asr") {
+//                    dd($attachments, $data_new, $files);
                     $fileContent = Storage::disk('public')->get($data_new);
                     $files[] = [
                         'name' => 'images[]',
@@ -124,8 +133,12 @@ class Post extends Model
                         'filename' => basename($data_new),
                     ];
                 }
+//
             }
 
+            foreach ($files as $item){
+                Storage::disk('posts')->put('posts/' . $item['filename'], $item['contents']);
+            }
             DB::connection('blog_db')->table('posts')
                 ->where('id', $model->id)
                 ->update(['content_blog' => $newHtml]);
@@ -134,6 +147,7 @@ class Post extends Model
 //                ->update(['content' => $newHtml]);
             $response = Http::attach($files)->post($targetUrl);
         });
+
     }
 
 }
