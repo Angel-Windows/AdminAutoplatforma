@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', HomePageController::class)->name('home');
+Route::get('/', function () {
+    return redirect('/admin');
+})->name('home');
 Route::get('/blog/{post:slug}', PostPageController::class)->name('post');
 Route::get('/test_https', function () {
 
