@@ -2,27 +2,32 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Resources\Concerns\Translatable;
-use Filament\SpatieLaravelTranslatablePlugin;
-use App\Filament\Forms\Components\FileUploadMy;
+
+
 use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
+
 use App\Models\Blog\Post;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
-use Filament\Resources\Resource;
-use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Filament\Resources\Actions\ChangeLanguageAction;
-use AmidEsfahani\FilamentTinyEditor\TinyEditor;
+
+use Filament\Resources\Resource;
+
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\Layout\Panel;
+
+use Filament\Resources\Concerns\Translatable;
+use Filament\SpatieLaravelTranslatablePlugin;
 
 class PostResource extends Resource
 {
@@ -49,40 +54,38 @@ class PostResource extends Resource
                             ->collapsible()
                             ->columns()
                             ->schema([
-                                Forms\Components\TextInput::make('title')
+                                TextInput::make('title')
                                     ->autofocus()
                                     ->required()
                                     ->debounce(),
-
 //                                    ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                                Forms\Components\TextInput::make('slug')
+                                TextInput::make('slug')
 //                                    ->readOnly()
                                     ->required(),
-                                Forms\Components\Textarea::make('excerpt')
+                                Textarea::make('excerpt')
                                     ->columnSpan(2),
-//                                ChangeLanguageAction::make('content'),
 
-//                                Forms\Components\RichEditor::make('content')
-//                                    ->fileAttachmentsDisk('public')
-//                                    ->fileAttachmentsDirectory('posts')
-//                                    ->columnSpan(2)
-//                                ,
-//                                TinyEditor::make('content')
-//                                    ->fileAttachmentsDisk('public')
-//                                    ->fileAttachmentsVisibility('public')
-//                                    ->fileAttachmentsDirectory('posts')
-//                                    ->profile('default|simple|full|minimal|none|custom')
-////                                    ->rtl() // Set RTL or use ->direction('auto|rtl|ltr')
-//                                    ->columnSpan('full')
-//                                    ->required(),
-
-                                TinyEditor::make('content')
+                                RichEditor::make('content')
+                                    ->toolbarButtons([
+                                        'h1',
+                                        'h2',
+                                        'h3',
+                                        'attachFiles',
+                                        'blockquote',
+                                        'bold',
+                                        'bulletList',
+                                        'codeBlock',
+                                        'italic',
+                                        'link',
+                                        'orderedList',
+                                        'strike',
+                                        'underline',
+                                        'redo',
+                                        'undo',
+                                    ])
                                     ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsVisibility('private')
                                     ->fileAttachmentsDirectory('posts')
-                                    ->profile('default|simple|full|minimal|none|custom')
-                                    ->columnSpan('full')
-                                    ->required()
+                                    ->columnSpan(2)
                             ]),
                     ]),
                 Forms\Components\Group::make()
@@ -90,20 +93,20 @@ class PostResource extends Resource
                         Forms\Components\Section::make('Metadata')
                             ->collapsible()
                             ->schema([
-                                Forms\Components\Select::make('user_id')
+                                Select::make('user_id')
                                     ->label('Author')
                                     ->relationship('user', 'name')
                                     ->default(fn() => auth()->id())
                                     ->required(),
-                                Forms\Components\Select::make('category_id')
+                                Select::make('category_id')
                                     ->searchable()
                                     ->relationship('category', 'name')
                                     ->createOptionForm([
-                                        Forms\Components\TextInput::make('name')
+                                        TextInput::make('name')
                                             ->debounce()
                                             ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
                                             ->required(),
-                                        Forms\Components\TextInput::make('slug')
+                                       TextInput::make('slug')
                                             ->readOnly()
                                             ->unique()
                                             ->required(),
@@ -111,19 +114,17 @@ class PostResource extends Resource
 //                                Forms\Components\Select::make('tags')
 //                                    ->multiple()
 //                                    ->relationship('tags', 'name'),
-                                Forms\Components\DateTimePicker::make('published_at')
+                                DateTimePicker::make('published_at')
                                     ->label('Published At'),
-                                Forms\Components\TextInput::make('reading_time')
+                                TextInput::make('reading_time')
                                     ->numeric()
                                     ->label('Reading Time'),
-                                Forms\Components\FileUpload::make('cover')
+                                FileUpload::make('cover')
                                     ->label('Cover Image')
                                     ->directory('posts')
                                     ->disk('public')
                                     ->image('https://posts.peakpx.com/wallpaper/102/801/HD-wallpaper-olymus-kinda-adsf-asdfsfa-asdfasdfa-sfgha.jpg'),
-//                                FileUploadMy::make('cover')
-//                                    ->image(''),
-                                Forms\Components\TextInput::make('alt_image')
+                                TextInput::make('alt_image')
                                     ->label('Alt'),
                             ]),
                     ]),

@@ -16,13 +16,19 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Spatie\Translatable\HasTranslations;
+use App\Jobs\MyTask;
 
 class Post extends Model
 {
     use HasFactory;
     use HasTranslations;
+
     protected $connection = 'blog_db';
-    public $translatable = [ 'content','title', 'excerpt'];
+    public $translatable = [
+        'content',
+        'title',
+        'excerpt'
+    ];
     protected $fillable = [
         'user_id',
         'category_id',
@@ -30,6 +36,7 @@ class Post extends Model
         'slug',
         'excerpt',
         'content',
+        'content_blog',
         'cover',
         'cover_url',
         'published_at',
@@ -89,63 +96,10 @@ class Post extends Model
     protected static function booted()
     {
 
+
         static::saved(function ($model) {
+            MyTask::dispatch($model->id)->delay(now()->addSeconds(10));
             Log::debug('An informational message.');
-            $filePath = $model->cover;
-            $files = [];
-            $targetUrl = env('BLOG_URL') . 'save_file';
-
-//            $targetUrl = env('blog_url') . '/save_file';
-            if (Storage::disk('public')->exists($filePath ?? "ase")) {
-                $imagePath = Storage::disk('public')->get($filePath);
-                $originalFileName = basename($filePath);
-                Storage::disk('posts_logo')->put('posts/' . $originalFileName, $imagePath);
-//                $files[] = [
-//                    'name' => 'images[]',
-//                    'contents' => $imagePath,
-//                    'filename' => $originalFileName,
-//                ];
-            }
-            $pattern = '/src="([^"]+)"/';
-
-            preg_match_all($pattern, $model->content, $matches);
-            $oldBaseUrl = '../../../storage/';
-            $newBaseUrl = env('BLOG_URL') ;
-            $newHtml = str_replace($oldBaseUrl, $newBaseUrl, $model->content);
-
-
-//            dd($oldBaseUrl . '\n /n' . $newBaseUrl . '\n /n' . $newHtml);
-            $srcValues = $matches[1];
-//            dd($srcValues);
-            foreach ($srcValues as $pattern) {
-
-                $storageString = '../../../storage/';
-                $attachments = strpos($pattern, $storageString);
-
-                $data_new = substr($pattern, $attachments + strlen($storageString));
-
-                if (Storage::disk('public')->exists($data_new) ?? "asr") {
-//                    dd($attachments, $data_new, $files);
-                    $fileContent = Storage::disk('public')->get($data_new);
-                    $files[] = [
-                        'name' => 'images[]',
-                        'contents' => $fileContent,
-                        'filename' => basename($data_new),
-                    ];
-                }
-//
-            }
-
-            foreach ($files as $item){
-                Storage::disk('posts')->put('posts/' . $item['filename'], $item['contents']);
-            }
-            DB::connection('blog_db')->table('posts')
-                ->where('id', $model->id)
-                ->update(['content_blog' => $newHtml]);
-//            DB::connection('blog_db')->table('posts')
-//                ->where('id', $model->id)
-//                ->update(['content' => $newHtml]);
-            $response = Http::attach($files)->post($targetUrl);
         });
 
     }
