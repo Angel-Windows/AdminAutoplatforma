@@ -98,7 +98,7 @@ class Post extends Model
 
 
         static::saved(function ($model) {
-            MyTask::dispatch($model->id)->delay(now()->addSeconds(10));
+            MyTask::dispatch($model->id)->delay(now()->addSeconds(5));
             Log::debug('An informational message.');
         });
 
